@@ -54,13 +54,19 @@ In test mode, rather than reading from stdin, a sample of output from remoteexec
 
 takes the JSON output of extract2json.py and converts it into JSON representing nested Topic and Post Python objects.  The Post object contains a field, "text", that is a list of strings that holds the post text.
 
-The JSON output is easily converitable back to the Python data structures and I'm 98.65% sure the same is true for Dart.  
+The JSON output is easily converitable back to the Python and Dart structures and pretty confident most object oriented languages will be able to use it.
 
 example: python remoteexec.py --username username --password yourpassword -- "extract -s -1 news,pol,welltech" | python extract2json.py | python makeobjects.py 
 
 There is a test mode for standalone testing:  python makeobjects.py -test
 
 In test mode rather than reading from stdin, a sample of output from extract2json.py is read in from linejson.txt which is included in the repository.  
+
+The default behavior is to return a JSON list that can be converted into a list of topics which contains Posts.
+
+There is an addiitonal behavior that can be used by passing the -conf flag.  When used, the output will be a JSON list that can be converted into a list of Conferences which contains Topics which contains Posts.  Exeample: python makeobjects2json.py -conf
+
+See the Conf, Topic, and Post classes in the classes.py file for the data structures.
 
 
 
