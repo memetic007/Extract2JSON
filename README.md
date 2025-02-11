@@ -64,7 +64,7 @@ In test mode rather than reading from stdin, a sample of output from extract2jso
 
 The default behavior is to return a JSON list that can be converted into a list of topics which contains Posts.
 
-There is an addiitonal behavior that can be used by passing the -conf flag.  When used, the output will be a JSON list that can be converted into a list of Conferences which contains Topics which contains Posts.  Exeample: python makeobjects2json.py -conf
+There is an addiitonal behavior that can be used by passing the -conf flag.  When used, the output will be a JSON list that can be converted into a list of Conferences which contains Topics which contains Posts.  Example: python makeobjects2json.py -conf
 
 See the Conf, Topic, and Post classes in the classes.py file for the data structures.
 
