@@ -1,19 +1,22 @@
 import paramiko
 import argparse
 import sys
+import utils
+
 
 # Parse command-line arguments
 parser = argparse.ArgumentParser(description="Execute a remote command via SSH.")
 parser.add_argument("command", help="Command to execute on the remote server")
 parser.add_argument("--username", required=True, help="Username for SSH authentication")
 parser.add_argument("--password", required=True, help="Password for SSH authentication")
+parser.add_argument("--input", help="Input string to pipe to the command")
 args = parser.parse_args()
 
 # Connection parameters
 hostname = "well.com"
-username = args.username  # Use command-line argument for username
-password = args.password  # Use command-line argument for password
-command = args.command  # Use command-line argument for command
+username = args.username
+password = args.password
+command = args.command
 
 # Initialize SSH client
 client = paramiko.SSHClient()
@@ -29,6 +32,12 @@ try:
     
     # Execute command
     stdin, stdout, stderr = client.exec_command(command)
+    
+    # If input string is provided, write it to stdin and close it
+    if args.input:
+        stdin.write(args.input)
+        stdin.flush()
+    stdin.close()
     
     # Capture output
     output = stdout.read().decode("utf-8", errors="replace")

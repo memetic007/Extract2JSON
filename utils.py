@@ -3,7 +3,12 @@ from datetime import datetime
 
 # check for -test switch on the command line 
 
-
+def wait_for_spacebar():
+    print("Press spacebar to continue...")
+    while True:
+        if sys.stdin.read(1) == ' ':
+            break
+        
 def checkTest():
    
    # legacy implementation - use checkArg instead for new arg checks
