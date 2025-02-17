@@ -4,19 +4,25 @@ import sys
 import utils
 
 
+# Debug: Print raw sys.argv
+print("Raw arguments:", sys.argv)
+
 # Parse command-line arguments
 parser = argparse.ArgumentParser(description="Execute a remote command via SSH.")
-parser.add_argument("command", help="Command to execute on the remote server")
 parser.add_argument("--username", required=True, help="Username for SSH authentication")
 parser.add_argument("--password", required=True, help="Password for SSH authentication")
 parser.add_argument("--input", help="Input string to pipe to the command")
+parser.add_argument("--conf", help="Conference number for post")
+parser.add_argument("--num", help="Post number within conference")
 args = parser.parse_args()
 
 # Connection parameters
 hostname = "well.com"
 username = args.username
 password = args.password
-command = args.command
+
+# Build the command that handles the pipe internally
+command = 'bash -c "cat | post {}.{}"'.format(args.conf, args.num)
 
 # Initialize SSH client
 client = paramiko.SSHClient()
@@ -31,7 +37,7 @@ try:
     )
     
     # Execute command
-    stdin, stdout, stderr = client.exec_command(command)
+    stdin, stdout, stderr = client.exec_command(command[0], command[1:])
     
     # If input string is provided, write it to stdin and close it
     if args.input:
