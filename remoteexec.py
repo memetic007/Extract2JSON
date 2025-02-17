@@ -35,7 +35,9 @@ try:
     
     # If input string is provided, write it to stdin and close it
     if args.input:
-        stdin.write(args.input)
+        # Process escape sequences in the input string
+        processed_input = args.input.encode().decode('unicode-escape')
+        stdin.write(processed_input)
         stdin.flush()
     stdin.close()
     
