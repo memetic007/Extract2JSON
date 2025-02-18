@@ -4,14 +4,17 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        
         {
-            "name": "Python Debugger: Current File",
-            "type": "debugpy",
+            "name": "Python: Remote Exec",
+            "type": "python",
             "request": "launch",
-            "program": "${file}",
-            "console": "integratedTerminal",
-            "args": ["--username", "memetic", "--password", "land+High007", "--", "echo 'blow\nme\n'"]
+            "program": "remoteexec.py",
+            "args": [
+                "--username", "memetic",
+                "--password", "land+High007",
+                "echo -e \\\"blow\\\\nme\\\" | post freefire.ind 19"
+            ],
+            "console": "integratedTerminal"
         }
     ]
 }

@@ -4,16 +4,11 @@ import sys
 import utils
 
 
-# Debug: Print raw sys.argv
-print("Raw arguments:", sys.argv)
-
 # Parse command-line arguments
 parser = argparse.ArgumentParser(description="Execute a remote command via SSH.")
+parser.add_argument("command", help="Command to execute on the remote server")
 parser.add_argument("--username", required=True, help="Username for SSH authentication")
 parser.add_argument("--password", required=True, help="Password for SSH authentication")
-parser.add_argument("--input", help="Input string to pipe to the command")
-parser.add_argument("--conf", help="Conference number for post")
-parser.add_argument("--num", help="Post number within conference")
 args = parser.parse_args()
 
 # Connection parameters
@@ -21,8 +16,8 @@ hostname = "well.com"
 username = args.username
 password = args.password
 
-# Build the command that handles the pipe internally
-command = 'bash -c "cat | post {}.{}"'.format(args.conf, args.num)
+# Build command array
+command = ["bash", "-c", args.command]
 
 # Initialize SSH client
 client = paramiko.SSHClient()
@@ -35,14 +30,11 @@ try:
         username=username,
         password=password
     )
-    
-    # Execute command
-    stdin, stdout, stderr = client.exec_command(command[0], command[1:])
-    
-    # If input string is provided, write it to stdin and close it
-    if args.input:
-        stdin.write(args.input)
-        stdin.flush()
+    print("Command to send to remote host:")
+    print(command)
+    # Execute command with proper quoting
+    cmd_str = f"bash -c $'{command[2]}'"
+    stdin, stdout, stderr = client.exec_command(cmd_str)
     stdin.close()
     
     # Capture output
@@ -51,8 +43,10 @@ try:
 
     # Print results, ensuring UTF-8 encoding
     if output:
+        print("output from remote host:")
         sys.stdout.buffer.write(output.encode("utf-8", errors="replace"))
     if errors:
+        print("error from remote host:")
         sys.stdout.buffer.write(errors.encode("utf-8", errors="replace"))
 
 except paramiko.AuthenticationException:
