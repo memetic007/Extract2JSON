@@ -8,11 +8,14 @@
             "name": "Python: Remote Exec",
             "type": "python",
             "request": "launch",
-            "program": "remoteexec.py",
+            "program": "post.py",
             "args": [
                 "--username", "memetic",
                 "--password", "land+High007",
-                "echo -e \\\"blow\\\\nme\\\" | post freefire.ind 19"
+                "--conf", "freefire.ind",
+                "--topic", "19",
+                "--debug",
+                "bWVycnkgY2hyaXN0bWFzCmFuZCBoYXBweQp2YWxlbnRpbmVzIGRheQ=="
             ],
             "console": "integratedTerminal"
         }
