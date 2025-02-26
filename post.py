@@ -13,7 +13,7 @@ def main():
     parser.add_argument("--password", required=True, help="Password for SSH authentication")
     parser.add_argument("--conf", required=True, help="Conference name")
     parser.add_argument("--topic", required=True, help="Topic name")
-    parser.add_argument("--debug", action="store_true", help="Enable debug output")
+    parser.add_argument("-debug", action="store_true", help="Enable debug output")
     args = parser.parse_args()
 
     # Hard-coded host
